@@ -313,6 +313,17 @@ require("lazy").setup({
 		---@type render.md.UserConfig
 		opts = {},
 	},
+	{
+		"nvim-lualine/lualine.nvim",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		config = function()
+			require("lualine").setup({
+				options = {
+					theme = "gruvbox_dark",
+				},
+			})
+		end,
+	},
 
 	-- NOTE: Plugins can also be configured to run Lua code when they are loaded.
 	--
