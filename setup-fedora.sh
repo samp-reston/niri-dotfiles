@@ -45,19 +45,18 @@ readonly OPTIONAL_BLUETOOTH_PACKAGES=("bluez" "bluez-tools")
 # Notes on mappings from Arch:
 #   ttf-jetbrains-mono-nerd       -> jetbrains-mono-fonts (nerd variant not in fedora repos)
 #   qt5-wayland / qt6-wayland     -> qt5-qtwayland / qt6-qtwayland
-#   polkit-gnome                  -> polkit-gnome (via COPR or manual; not in standard repos)
+#   polkit-gnome                  -> DROPPED in Fedora 41; use mate-polkit instead
 #   gtklock                       -> NOT in Fedora repos; handled separately
 #   rofi                          -> rofi (same)
 #   zathura-pdf-mupdf             -> zathura-pdf-mupdf (same, available in RPMFusion)
 #   starship                      -> via COPR: atim/starship
 #   yazi                          -> via COPR: lihaohong/yazi
 #   imagemagick                   -> ImageMagick (capital I in Fedora)
-#   polkit-gnome                  -> polkit-gnome (in Fedora repos)
 readonly DNF_PACKAGES=(
   niri waybar fish fastfetch mako alacritty kitty neovim
   zathura zathura-pdf-mupdf jetbrains-mono-fonts
   qt5-qtwayland qt6-qtwayland ffmpeg ImageMagick unzip jq
-  rofi curl libnotify polkit-gnome
+  rofi curl libnotify mate-polkit
   git gcc make
 )
 
