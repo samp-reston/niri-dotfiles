@@ -7,7 +7,7 @@ IFS=$'\n\t'
 # CONFIGURATION
 # ==========================
 
-readonly REPO_URL="https://github.com/saatvik333/niri-dotfiles.git"
+readonly REPO_URL="https://github.com/samp-reston/niri-dotfiles.git"
 readonly DOTDIR="${HOME}/.dotfiles-sevens"
 readonly CONFIG_DIR="${HOME}/.config"
 readonly BACKUP_DIR="${HOME}/.config_backup_$(date +%Y%m%d_%H%M%S)"
@@ -176,7 +176,7 @@ EXAMPLES:
   ${0##*/} --help       # Display this help message
 
 REPORT BUGS:
-  https://github.com/saatvik333/niri-dotfiles/issues
+  https://github.com/samp-reston/niri-dotfiles/issues
 
 EOF
 }
