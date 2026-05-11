@@ -61,9 +61,15 @@ run() {
 # ==========================
 
 check_fedora() {
-  command -v dnf >/dev/null || fatal "Not Fedora"
-  grep -qi fedora /etc/os-release || fatal "Not Fedora system"
-  msg "Fedora detected"
+  if [[ -f /etc/os-release ]]; then
+    . /etc/os-release
+    if [[ "${ID:-}" == "fedora" || "${ID_LIKE:-}" == *"fedora"* ]]; then
+      msg "Fedora detected: ${PRETTY_NAME:-unknown}"
+      return 0
+    fi
+  fi
+
+  fatal "This script is intended for Fedora systems"
 }
 
 check_sudo() {
