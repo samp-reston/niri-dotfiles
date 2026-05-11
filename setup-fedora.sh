@@ -19,7 +19,7 @@ TEMP_BUILD_DIR=""
 
 # Progress tracking
 CURRENT_STEP=0
-readonly TOTAL_STEPS=20
+readonly TOTAL_STEPS=21
 
 # Installation summary tracking
 declare -a INSTALL_SUMMARY=()
@@ -45,15 +45,19 @@ readonly OPTIONAL_BLUETOOTH_PACKAGES=("bluez" "bluez-tools")
 # Notes on mappings from Arch:
 #   ttf-jetbrains-mono-nerd       -> jetbrains-mono-fonts (nerd variant not in fedora repos)
 #   qt5-wayland / qt6-wayland     -> qt5-qtwayland / qt6-qtwayland
-#   polkit-gnome                  -> polkit-gnome (same)
+#   polkit-gnome                  -> polkit-gnome (via COPR or manual; not in standard repos)
 #   gtklock                       -> NOT in Fedora repos; handled separately
 #   rofi                          -> rofi (same)
 #   zathura-pdf-mupdf             -> zathura-pdf-mupdf (same, available in RPMFusion)
+#   starship                      -> via COPR: atim/starship
+#   yazi                          -> via COPR: lihaohong/yazi
+#   imagemagick                   -> ImageMagick (capital I in Fedora)
+#   polkit-gnome                  -> polkit-gnome (in Fedora repos)
 readonly DNF_PACKAGES=(
-  niri waybar fish fastfetch mako alacritty kitty starship neovim yazi
+  niri waybar fish fastfetch mako alacritty kitty neovim
   zathura zathura-pdf-mupdf jetbrains-mono-fonts
-  qt5-qtwayland qt6-qtwayland polkit-gnome ffmpeg imagemagick unzip jq
-  rofi curl libnotify
+  qt5-qtwayland qt6-qtwayland ffmpeg ImageMagick unzip jq
+  rofi curl libnotify polkit-gnome
   git gcc make
 )
 
@@ -576,6 +580,46 @@ install_dnf_packages() {
     msg "Fedora packages installed successfully."
   else
     fatal "Failed to install Fedora repository packages."
+  fi
+}
+
+install_copr_packages() {
+  info "Installing packages via COPR (starship, yazi)..."
+
+  local copr_packages=(
+    "atim/starship:starship"
+    "lihaohong/yazi:yazi"
+  )
+
+  local installed=()
+  local failed=()
+
+  for entry in "${copr_packages[@]}"; do
+    local repo="${entry%%:*}"
+    local pkg="${entry##*:}"
+
+    info "Enabling COPR repo: ${repo}..."
+    if ! sudo dnf copr enable -y "${repo}" >> "${LOG_FILE}" 2>&1; then
+      warn "Failed to enable COPR repo: ${repo} — skipping ${pkg}"
+      failed+=("${pkg}")
+      continue
+    fi
+
+    info "Installing ${pkg} from COPR..."
+    if sudo dnf install -y "${pkg}" >> "${LOG_FILE}" 2>&1; then
+      installed+=("${pkg}")
+    else
+      warn "Failed to install ${pkg} from COPR repo ${repo}"
+      failed+=("${pkg}")
+    fi
+  done
+
+  if [[ ${#installed[@]} -gt 0 ]]; then
+    msg "COPR packages installed: ${installed[*]}"
+  fi
+  if [[ ${#failed[@]} -gt 0 ]]; then
+    warn "Failed to install via COPR: ${failed[*]}"
+    warn "You may need to install these manually."
   fi
 }
 
@@ -1477,6 +1521,10 @@ main() {
   step "Installing Fedora Repository Packages"
   install_dnf_packages
   add_summary "Fedora packages installed (niri, waybar, fish, etc.)"
+
+  step "Installing COPR Packages (starship, yazi)"
+  install_copr_packages
+  add_summary "COPR packages installed (starship, yazi)"
 
   step "Installing Extra DNF Packages"
   install_extra_dnf_packages
