@@ -96,7 +96,7 @@ Core Components
 
     Window Manager: Niri (Scrollable-tiling Wayland compositor)
     Status Bar: Waybar (Highly customizable)
-    Terminal: Alacritty, Kitty
+    Terminal: Ghostty, Kitty
     Shell: Fish (with optional Zsh)
     Notification Daemon: Mako
     Application Launcher: Rofi
@@ -146,7 +146,7 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 - Fish
 - Fastfetch
 - Mako
-- Alacritty
+- Ghostty
 - Kitty
 - Starship
 
@@ -164,7 +164,7 @@ Thanks to [vinceliuice](https://github.com/vinceliuice) and [Fausto-Korpsvart](h
 
 | Keybind              | Action                                           |
 | -------------------- | ------------------------------------------------ |
-| `MOD + Return`       | Open terminal (Alacritty)                        |
+| `MOD + Return`       | Open terminal (Ghostty)                          |
 | `MOD + Alt + Return` | Open terminal (Kitty)                            |
 | `MOD + B`            | Open primary browser (Firefox Developer Edition) |
 | `MOD + Alt + B`      | Open secondary browser (Google Chrome)           |

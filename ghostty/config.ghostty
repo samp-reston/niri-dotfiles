@@ -1,0 +1,36 @@
+# Import generated colours
+config-file = ~/.config/ghostty/colors.conf
+
+# Window
+window-decoration = false
+background-opacity = 0.9
+window-padding-x = 10
+window-padding-y = 10
+window-padding-balance = true
+
+# Cursor
+cursor-style = block
+cursor-style-blink = false
+
+# Mouse
+mouse-hide-while-typing = true
+
+# Scrollback
+scrollback-limit = 10000
+
+# Font
+font-family = "JetBrainsMono Nerd Font"
+font-size = 12
+
+# Clipboard
+copy-on-select = true
+
+# Keybindings
+keybind = ctrl+shift+v=paste_from_clipboard
+keybind = ctrl+shift+c=copy_to_clipboard
+
+# Clear terminal like Ctrl+L
+keybind = ctrl+l=clear_screen
+
+# Font reset
+keybind = ctrl+0=reset_font_size

@@ -44,7 +44,7 @@ check_contrast = true
 # target: ABSOLUTE path in which to place a file with generated templated values.
 # ¡ If either one is a directory, then both SHOULD be one. !
 # zathura = { template = 'zathura', target = '~/.config/zathura/zathurarc' }
-alacritty = { template = 'alacritty.toml', target = '~/.config/alacritty/colors.toml' }
+ghostty = { src = 'ghostty.conf', dst = '~/.config/ghostty/colors.conf' }
 
 kitty = { src = 'kitty.conf', dst = '~/.config/kitty/colors.conf' }
 
@@ -66,4 +66,5 @@ mako = { src = 'mako', dst = '~/.config/mako/config' }
 
 zathurarc = { src = 'zathurarc', dst = '~/.config/zathura/zathurarc' }
 
-vicinae = { src = 'vicinae.toml', dst = '~/.local/share/vicinae/themes/wallust.toml'}
+vicinae = { src = 'vicinae.toml', dst = '~/.local/share/vicinae/themes/wallust.toml' }
+

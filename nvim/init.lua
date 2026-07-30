@@ -392,6 +392,29 @@ require("lazy").setup({
 		},
 	},
 
+	-- {
+	-- 	"mrcjkb/rustaceanvim",
+	-- 	version = "^5", -- Recommended
+	-- 	lazy = false, -- This plugin is already lazy
+	-- 	ft = "rust",
+	-- 	config = function()
+	-- 		local mason_registry = require("mason-registry")
+	-- 		local codelldb = mason_registry.get_package("codelldb")
+	-- 		local extension_path = codelldb .. "/extension/"
+	-- 		local codelldb_path = extension_path .. "adapter/codelldb"
+	-- 		local liblldb_path = extension_path .. "lldb/lib/liblldb.dylib"
+	-- 		-- If you are on Linux, replace the line above with the line below:
+	-- 		-- local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+	-- 		local cfg = require("rustaceanvim.config")
+	--
+	-- 		vim.g.rustaceanvim = {
+	-- 			dap = {
+	-- 				adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+	-- 			},
+	-- 		}
+	-- 	end,
+	-- },
+
 	-- NOTE: Plugins can specify dependencies.
 	--
 	-- The dependencies are proper plugin specifications as well - anything
@@ -876,12 +899,12 @@ require("lazy").setup({
 					-- `friendly-snippets` contains a variety of premade snippets.
 					--    See the README about individual language/framework/plugin snippets:
 					--    https://github.com/rafamadriz/friendly-snippets
-					-- {
-					--   'rafamadriz/friendly-snippets',
-					--   config = function()
-					--     require('luasnip.loaders.from_vscode').lazy_load()
-					--   end,
-					-- },
+					{
+						"rafamadriz/friendly-snippets",
+						config = function()
+							require("luasnip.loaders.from_vscode").lazy_load()
+						end,
+					},
 				},
 				opts = {},
 			},
@@ -1064,10 +1087,32 @@ require("lazy").setup({
 			--  Check out: https://github.com/echasnovski/mini.nvim
 		end,
 	},
+	{
+		"NStefan002/screenkey.nvim",
+		lazy = false,
+		version = "*", -- or branch = "main", to use the latest commit
+		config = function()
+			require("screenkey").setup({
+				show_leader = false,
+				win_opts = {
+					row = vim.o.lines - vim.o.cmdheight - 2,
+					width = 20,
+				},
+			})
+		end,
+	},
+	{
+		"lervag/vimtex",
+		lazy = false, -- we don't want to lazy load VimTeX
+		-- tag = "v2.15", -- uncomment to pin to a specific release
+		init = function()
+			-- VimTeX configuration goes here, e.g.
+			vim.g.vimtex_view_method = "zathura"
+		end,
+	},
 	{ -- Highlight, edit, and navigate code
 		"nvim-treesitter/nvim-treesitter",
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
 		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
 		opts = {
 			ensure_installed = {
@@ -1100,6 +1145,19 @@ require("lazy").setup({
 		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
 		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
 		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+	},
+	{
+		"olimorris/codecompanion.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		opts = {
+			-- NOTE: The log_level is in `opts.opts`
+			opts = {
+				log_level = "DEBUG", -- or "TRACE"
+			},
+		},
 	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the

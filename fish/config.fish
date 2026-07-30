@@ -28,6 +28,14 @@ for p in $HOME/.local/bin $HOME/Applications/depot_tools
     end
 end
 
+if not set -q SSH_AUTH_SOCK
+    eval (ssh-agent -c)
+end
+
+if not ssh-add -l >/dev/null 2>&1
+    ssh-add ~/.ssh/id_ed25519_priv
+end
+
 #####################
 ### Key Bindings  ###
 #####################
